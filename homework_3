@@ -1,0 +1,37 @@
+import re
+
+
+def get_user_data():
+    data = input("Введите данные (Фамилия Имя Отчество датарождения номертелефона пол), разделенные пробелом: ")
+    data = data.split()
+    user_data = {}
+    for item in data:
+        if re.match(r"^[А-Яа-я]+$", item):  
+            if 'surname' not in user_data:
+                user_data['surname'] = item
+        elif 'name' not in user_data:
+            user_data['name'] = item
+        elif 'patronymic' not in user_data:
+            user_data['patronymic'] = item
+        elif re.match(r"^d{2}.d{2}.d{4}$", item): 
+            user_data['dob'] = item
+        elif re.match(r"^d+$", item):  
+            user_data['phone'] = item
+        elif item in ['f', 'm']:  
+            user_data['gender'] = item
+    return user_data
+user_data = get_user_data()
+
+print("Введенные данные:")
+
+print("Фамилия:", user_data.get('surname'))
+
+print("Имя:", user_data.get('name'))
+
+print("Отчество:", user_data.get('patronymic'))
+
+print("Дата рождения:", user_data.get('dob'))
+
+print("Номер телефона:", user_data.get('phone'))
+
+print("Пол:", user_data.get('gender'))
